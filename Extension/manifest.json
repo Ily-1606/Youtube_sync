@@ -1,13 +1,21 @@
 {
-    "manifest_version": 3,
+    "manifest_version": 2,
     "name": "Youtube sync",
     "version": "0.1",
-    "default_locale": "vi",
     "description": "Một tiện ích mở rộng cho phép đồng bộ hóa video đã xem trên youtube",
-    "icons": {},
-    "background": {
-        "service_worker": "/assets/js/background.js"
+    "icons": {
+        "16": "/assets/image/logo-16.png",
+        "48": "/assets/image/logo-48.png",
+        "128": "/assets/image/logo-128.png"
     },
+    "background": {
+        "scripts": ["/assets/js/background.js"]
+    },
+    "author": "Ily_1606",
+    "browser_action": {
+        "default_icon": "/assets/image/logo-16.png"
+    },
+    "homepage_url": "http://localhost",
     "content_scripts": [
         {
             "matches": [
