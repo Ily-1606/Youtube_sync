@@ -2,9 +2,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Yotube sync - Đăng ký</title>
+    <title>Yotube sync - Đăng nhập</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/metal.css">
+<link rel="icon" href="/Server/assets/image/logo-16.png">
 </head>
 
 <body>
@@ -17,18 +18,18 @@
         <div class="row position-relative">
             <div class="mx-auto my-auto col-4 p-4 rounded border position-fixed metal-container">
                 <h3 class="text-center metal-title">Yotube sync</h3>
-                <h6 class="text-center metal-title-small">Đăng ký, hoàn toàn miễn phí</h6>
-                <form action="http://localhost/api/regsister.php" method="POST" id="stoped_form">
+                <h6 class="text-center metal-title-small">Đăng nhập và đồng bộ</h6>
+                <form action="/api/login.php" method="POST" id="stoped_form">
                     <div class="form-group metal-input">
-                        <input type="text" name="username" id="username" class="form-control" />
+                        <input type="text" name="username" id="username" class="form-control " />
                         <label for="username">Tên người dùng</label>
                     </div>
                     <div class="form-group metal-input">
                         <input type="password" name="password" id="password" class="form-control" />
                         <label for="password">Mật khẩu</label>
                     </div>
-                    <a href="login.html">Đã có tài khoản?</a>
-                    <button class="btn btn-metal float-right">Đăng ký</button>
+                    <a href="regsister.php">Chưa có tài khoản?</a>
+                    <button class="btn btn-metal float-right">Đăng nhập</button>
                 </form>
             </div>
         </div>

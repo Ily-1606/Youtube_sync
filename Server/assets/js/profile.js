@@ -1,8 +1,6 @@
 function check_login(callback) {
     $.ajax({
-        url: "http://localhost/api/status.php",
-        crossDomain: true,
-        xhrFields: { withCredentials: true },
+        url: "/api/status.php",
         success: function (e) {
             e = JSON.parse(e);
             if (e.status) {
@@ -10,7 +8,7 @@ function check_login(callback) {
                 callback();
             }
             else {
-                window.location.href = "/HTML/login.html";
+                window.location.href = "/page/login.page";
             }
         },
         error: function (e) {
@@ -21,7 +19,7 @@ function check_login(callback) {
 }
 function load_data() {
     $.ajax({
-        url: "http://localhost/api/list_viewed.php",
+        url: "/api/list_viewed.php",
         data: "page="+window.youtube_sync.page,
         crossDomain: true,
         xhrFields: { withCredentials: true },
@@ -44,6 +42,7 @@ function load_data() {
                     }
                 }
                 else {
+                    $("#load_more_btn").hide();
                     $("#list_load_id").html('<div class="col-12 text-center text-danger">Chưa có lịch sử xem.</div>');
                 }
             }

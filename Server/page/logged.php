@@ -5,6 +5,7 @@
     <title>Yotube sync - Đăng nhập thành công</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/metal.css">
+<link rel="icon" href="/Server/assets/image/logo-16.png">
 </head>
 
 <body>

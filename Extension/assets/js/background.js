@@ -1,12 +1,12 @@
 chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.create({ url: "/HTML/login.html" });
+    chrome.tabs.create({ url: "https://youtubesync.ily1606.team/" });
 });
 function add_sync(info) {
     var url = new URL(info.pageUrl);
     var search_params = url.searchParams;
     if (url.host == "www.youtube.com" && search_params.get("v") != null) {
         $.ajax({
-            url: "http://localhost/api/sync.php",
+            url: "https://youtubesync.ily1606.team/api/sync.php",
             method: "POST",
             data: "data_id=" + search_params.get("v"),
             crossDomain: true,
@@ -27,7 +27,7 @@ function add_sync(info) {
     var search_params = url.searchParams;
     if (url.host == "www.youtube.com" && search_params.get("v") != null) {
         $.ajax({
-            url: "http://localhost/api/remove_sync.php",
+            url: "https://youtubesync.ily1606.team/api/remove_sync.php",
             method: "POST",
             data: "data_id=" + search_params.get("v"),
             crossDomain: true,

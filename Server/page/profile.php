@@ -5,6 +5,7 @@
     <title>Yotube sync - Lịch sử xem</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/metal.css">
+    <link rel="icon" href="/Server/assets/image/logo-16.png">
 </head>
 
 <body>
@@ -15,7 +16,8 @@
     </div>
     <div class="container">
         <div class="row position-relative">
-            <div class="mx-auto col-6 p-4 rounded border mt-4">
+            <div class="mx-auto col-8 p-4 rounded border mt-4">
+                <a class="float-right" href="/logout.php">Đăng xuất</a>
                 <h3 class="text-center metal-title">Yotube sync</h3>
                 <h6 class="text-center metal-title-small">Danh sách video đã đồng bộ hóa</h6>
                 <div class="row" id="list_load_id">

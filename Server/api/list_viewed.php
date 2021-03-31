@@ -2,7 +2,13 @@
 include_once("../_connect.php");
 $lifetime = 3600 * 24;
 session_set_cookie_params($lifetime, '/; samesite=None', $_SERVER['HTTP_HOST'], 1, true);
-header('Access-Control-Allow-Origin: ' . $_SERVER["HTTP_ORIGIN"]);
+if(isset($_SERVER["HTTP_ORIGIN"])){
+    $origin = $_SERVER["HTTP_ORIGIN"];
+}
+else{
+    $origin = "*";
+}
+header("Access-Control-Allow-Origin: $origin");
 header("Access-Control-Allow-Credentials: true");
 session_start();
 if (isset($_SESSION["username"])) {

@@ -19,13 +19,13 @@ function check_form() {
 }
 function check_login() {
     $.ajax({
-        url: "http://localhost/api/status.php",
+        url: "/api/status.php",
         crossDomain: true,
         xhrFields: { withCredentials: true },
         success: function (e) {
             e = JSON.parse(e);
             if (e.status) {
-                window.location.href = "/HTML/profile.html";
+                window.location.href = "/page/profile.php";
             }
             else {
                 $(".modal_loading").fadeOut();
@@ -55,11 +55,11 @@ jQuery(function () {
                 if (e.status) {
                     toastr.success(e.message, 'Thành công!')
                     setTimeout(function () {
-                        if (window.location.pathname == "/HTML/regsister.html") {
-                            window.location.href = "/HTML/login.html";
+                        if (window.location.pathname == "/page/regsister.php") {
+                            window.location.href = "/page/login.php";
                         }
-                        else if (window.location.pathname == "/HTML/login.html") {
-                            window.location.href = "/HTML/logged.html";
+                        else if (window.location.pathname == "/page/login.php") {
+                            window.location.href = "/page/logged.php";
                         }
                     }, 2000);
                 } else {
