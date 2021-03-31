@@ -52,3 +52,23 @@ body{
 .metal-title-small{
     color: #4caf50;
 }
+.modal_loading{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #ffffff;
+    z-index: 1;
+}
+.spinning{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2
+}
+.thumbnail{
+    width: 100%;
+    height: auto;
+}

@@ -1,0 +1,33 @@
+<?php
+include_once("../_connect.php");
+$lifetime = 3600 * 24;
+session_set_cookie_params($lifetime, '/; samesite=None', $_SERVER['HTTP_HOST'], 1, true);
+header('Access-Control-Allow-Origin: ' . $_SERVER["HTTP_ORIGIN"]);
+header("Access-Control-Allow-Credentials: true");
+session_start();
+if (isset($_SESSION["username"])) {
+    if (isset($_GET["page"]))
+        $page = $_GET["page"];
+    else
+        $page = 0;
+    if ($page < 0)
+        $page = 0;
+    $start =  $page * 10;
+    $username = $_SESSION["username"];
+    $res = mysqli_query($conn, "SELECT * FROM table_sync WHERE `username` = '$username' ORDER BY create_time DESC LIMIT $start,10");
+    $data["status"] = true;
+    $data["data"] = array();
+    while($row = mysqli_fetch_array($res)){
+        array_push($data["data"],array("id"=>$row["id_youtube"],"create_time"=>$row["create_time"],"image"=>"https://i.ytimg.com/vi/".$row["id_youtube"]."/hqdefault.jpg","author"=>$row["author"],"chanel_id"=>$row["author_id"],"video_name"=>$row["video_name"]));
+    }
+    if(mysqli_num_rows($res) == 10){
+        $data["next_page"] = true;
+    }
+    else{
+        $data["next_page"] = false;
+    }
+} else {
+    $data["status"] = false;
+    $data["message"] = "Bạn chưa đăng nhập, vui lòng đăng nhập!";
+}
+echo json_encode($data);

@@ -17,35 +17,58 @@ function check_form() {
         $("#password").removeClass("metal-input-fixed");
     }
 }
+function check_login() {
+    $.ajax({
+        url: "http://localhost/api/status.php",
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+        success: function (e) {
+            e = JSON.parse(e);
+            if (e.status) {
+                window.location.href = "/HTML/profile.html";
+            }
+            else {
+                $(".modal_loading").fadeOut();
+            }
+        },
+        error: function (e) {
+            console.error(e);
+            toastr.error("Có lỗi khi kiểm tra trạng thái server!", "Có lỗi bất ngờ");
+        }
+    })
+}
 jQuery(function () {
+    check_login();
     check_form();
-    $("#username, #password").keyup(function(){
+    $("#username, #password").keyup(function () {
         check_form();
     });
-    $("#stoped_form").submit(function(){
+    $("#stoped_form").submit(function () {
         $.ajax({
             url: $(this).attr("action"),
             method: $(this).attr("method"),
             data: $(this).serialize(),
-            success: function(e){
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            success: function (e) {
                 e = JSON.parse(e);
-                if(e.status){
+                if (e.status) {
                     toastr.success(e.message, 'Thành công!')
-                    setTimeout(function (){
-                    if(window.location.pathname == "/HTML/regsister.html"){
-                        window.location.href = "/HTML/login.html";
-                    }
-                    else if(window.location.pathname == "/HTML/login.html"){
-                        window.location.href = "/HTML/logged.html";
-                    }
-                },2000);
-                }else{
+                    setTimeout(function () {
+                        if (window.location.pathname == "/HTML/regsister.html") {
+                            window.location.href = "/HTML/login.html";
+                        }
+                        else if (window.location.pathname == "/HTML/login.html") {
+                            window.location.href = "/HTML/logged.html";
+                        }
+                    }, 2000);
+                } else {
                     toastr.error(e.message, 'Có lỗi bất ngờ!')
                 }
             },
-            error: function(e){
+            error: function (e) {
                 console.error(e);
-                toastr.error("Không thể kết nối với máy chủ!","Có lỗi bất ngờ!")
+                toastr.error("Không thể kết nối với máy chủ!", "Có lỗi bất ngờ!")
             }
         });
         return false;
