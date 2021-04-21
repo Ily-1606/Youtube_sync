@@ -1,0 +1,74 @@
+body{
+    background-color: #f1f1f1;
+}
+.metal-input {
+    position: relative;
+    margin-top: 40px;
+}
+
+.metal-input>input {
+    outline: 0;
+    box-shadow: unset;
+    padding: 0px;
+}
+
+.metal-input>label {
+    color: #00bcd4;
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    transition: all 0.3s;
+    font-size: 15px;
+}
+
+.metal-input>input:focus+label, .metal-input>label.metal-label-fixed {
+    top: -20px;
+    left: 0px;
+    font-size: 13px;
+}
+
+.metal-input>input:focus,.metal-input>input.metal-input-fixed {
+    border: 0px;
+    border-bottom: 1px solid #00bcd4;
+    box-shadow: unset;
+    border-radius: 0px;
+}
+
+.btn-metal {
+    background-color: #00bcd4;
+    color: #fff;
+    font-size: 14px;
+}
+
+.metal-container {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+}
+.metal-title{
+    color: #f44336;
+}
+.metal-title-small{
+    color: #4caf50;
+}
+.modal_loading{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #ffffff;
+    z-index: 1;
+}
+.spinning{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2
+}
+.thumbnail{
+    width: 100%;
+    height: auto;
+}
