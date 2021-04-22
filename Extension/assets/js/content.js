@@ -121,8 +121,8 @@ jQuery(function () {
         });
     }, 2000);
     chrome.storage.local.get(["block_subsribe"],function(data){
-        if(data["block_subsribe"] == true){
-            $("body").addClass("block-subcribe");
+        if(data["block_subsribe"] == false){
+            $("body").addClass("disable-block-subcribe");
         }
     });
 })

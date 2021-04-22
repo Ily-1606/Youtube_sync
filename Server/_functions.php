@@ -22,6 +22,7 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_SSL_VERIFYPEER => false,
   CURLOPT_HTTPHEADER => array(
     'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
     'X-YouTube-Client-Name: 1',
@@ -32,6 +33,9 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
+if (curl_errno($curl)) {
+ echo curl_error($curl);
+}
 
 curl_close($curl);
 return $response;
