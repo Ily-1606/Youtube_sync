@@ -17,11 +17,11 @@ function check_login(callback) {
         }
     })
 }
-function delete_channel(id){
+function delete_channel(id,url){
     $.ajax({
         url: "https://youtubesync.ily1606.team/api/remove_blocked_channel.php",
         method: "POST",
-        data: "data_id=" + id,
+        data: "data_id=" + url,
         crossDomain: true,
         xhrFields: { withCredentials: true },
         success: function (e) {
@@ -29,11 +29,11 @@ function delete_channel(id){
             if(e.status){
                 $("#channel_"+id).remove();
                 $.ajax({
-                    url: "https://youtubesync.ily1606.team/api/ping_unblocked_channel.php?id="+id,
+                    url: "https://youtubesync.ily1606.team/api/ping_unblocked_channel.php?id="+url,
                     method: "GET"
                 });
             }else
-            alert("e.message")
+            alert(e.message)
         },
         error: function (e) {
             alert("Có lỗi khi kết nối với máy chủ!");
@@ -55,7 +55,7 @@ function load_data() {
                 }
                 if (e.data.length) {
                     for (var value of e.data) {
-                        $("#list_load_id").append('<div class="row mt-3 align-items-center col-12" id="channel_'+value["id"]+'"><div class="col-7"><p>Tên kênh: <a href="' + value["url_chanel"] + '" target="_blank">'+value["channel_name"]+'</a></p><p>ID kênh: '+value["id"]+'</p></div><div class="col-5"><p class="small">Ngày xem: ' + value["create_time"] + '</p><p><a href="javascript:delete_channel(\''+value["id"]+'\')">Gỡ chặn</a></p></div></div>')
+                        $("#list_load_id").append('<div class="row mt-3 align-items-center col-12" id="channel_'+value["id"]+'"><div class="col-7"><p style="display: block;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">URL: <a href="' + value["url_chanel"] + '" target="_blank">'+value["url_chanel"]+'</a></p></div><div class="col-5"><p class="small">Ngày block: ' + value["create_time"] + '</p><p><a href="javascript:delete_channel(\''+value["id"]+'\',\''+value["url_chanel"]+'\')">Gỡ chặn</a></p></div></div>')
                     }
                     if (e.next_page) {
                         $("#load_more_btn").show();

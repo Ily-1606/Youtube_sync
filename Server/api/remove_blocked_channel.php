@@ -10,10 +10,10 @@ if(isset($_SESSION["username"])){
     if(isset($_POST["data_id"])){
         $username = $_SESSION["username"];
         $data_id = mysqli_real_escape_string($conn, htmlspecialchars($_POST["data_id"]));
-        $res = mysqli_query($conn, "SELECT COUNT(*) as count FROM block_channels WHERE `username` = '$username' AND `id_channel` = '$data_id' LIMIT 1");
+        $res = mysqli_query($conn, "SELECT COUNT(*) as count FROM block_channels WHERE `username` = '$username' AND `url_chanel` = '$data_id' LIMIT 1");
         $row = mysqli_fetch_assoc($res);
         if ($row["count"] == 1) {
-            $res = mysqli_query($conn,"DELETE FROM block_channels WHERE `id_channel` = '$data_id' AND `username` = '$username'");
+            $res = mysqli_query($conn,"DELETE FROM block_channels WHERE `url_chanel` = '$data_id' AND `username` = '$username'");
             if($res){
                 $data["status"] = true;
                 $data["message"] = "Gỡ chặn thành công!";

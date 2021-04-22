@@ -66,28 +66,24 @@ function remove_sync(info, tab) {
 }
 var data_blacklist = [];
 function block_channel(info) {
-    var url = new URL(info.pageUrl);
-    var channel_id = url.pathname.split('/channel/')[1];
-    if (url.host == "www.youtube.com" && channel_id) {
-        $.ajax({
-            url: "https://youtubesync.ily1606.team/api/channels.php",
-            method: "POST",
-            data: "data_id=" + channel_id,
-            crossDomain: true,
-            xhrFields: { withCredentials: true },
-            success: function (e) {
-                e = JSON.parse(e);
-                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                    chrome.tabs.sendMessage(tabs[0].id, e);
-                });
-                if (data_blacklist.indexOf(channel_id) == -1)
-                    data_blacklist.push(channel_id);
-            },
-            error: function (e) {
-                alert("Có lỗi khi kết nối với máy chủ!");
-            }
-        });
-    }
+    $.ajax({
+        url: "https://youtubesync.ily1606.team/api/channels.php",
+        method: "POST",
+        data: "data_id=" + info.pageUrl,
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+        success: function (e) {
+            e = JSON.parse(e);
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, e);
+            });
+            if (data_blacklist.indexOf(info.pageUrl) == -1)
+                data_blacklist.push(info.pageUrl);
+        },
+        error: function (e) {
+            alert("Có lỗi khi kết nối với máy chủ!");
+        }
+    });
 }
 //Init data when user first load
 $.ajax({
@@ -104,10 +100,20 @@ $.ajax({
         alert("Có lỗi khi kết nối với máy chủ!");
     }
 });
+function detect_url(details, url) {
+    let block = false;
+    if(url == undefined)
+    url = new URL(details.url);
+    for (let i = 0; i < data_blacklist.length; i++) {
+        block = details.url.indexOf(data_blacklist[i]) != -1 && url.pathname == new URL(data_blacklist[i]).pathname;
+        if (block) break;
+    }
+    return block;
+}
 function callback_block(details) {
     var url = new URL(details.url);
-    var block = false;
-    if (url.host == "youtubesync.ily1606.team") {
+    let block = false;
+    if (url.host == "youtubesync.ily1606.team" && url.pathname == "/api/ping_unblocked_channel.php") {
         var channel_id = url.search.split("?id=")[1];
         var index = data_blacklist.indexOf(channel_id);
         if (index != -1) {
@@ -115,13 +121,23 @@ function callback_block(details) {
         }
     }
     else {
-        var channel_id = url.pathname.split('/channel/')[1];
-        block = data_blacklist.indexOf(channel_id) != -1;
-        if (block == false && details.requestBody) {
-            if (details.requestBody.raw) {
-                var postedString = JSON.parse(decodeURIComponent(String.fromCharCode.apply(null,
-                    new Uint8Array(details.requestBody.raw[0].bytes))));
-                block = data_blacklist.indexOf(postedString["browseId"]) != -1;
+        block = detect_url(details, url);
+        if (url.hostname == "www.youtube.com") {
+            if (url.pathname.indexOf('/youtubei/v1/') > -1) {
+                if (details.requestBody) {
+                    console.info(details);
+                    if (details.requestBody.raw) {
+                        var postedString = JSON.parse(decodeURIComponent(String.fromCharCode.apply(null,
+                            new Uint8Array(details.requestBody.raw[0].bytes))));
+                        block = detect_url({"url": "https://www.youtube.com/channel/"+postedString["browseId"]})
+                    }
+                }
+            }
+            else {
+                if (details.tabId && block) {
+                    chrome.tabs.update(details.tabId, { url: "/HTML/blocked.html" });
+                    block = false;
+                }
             }
         }
     }
@@ -132,7 +148,7 @@ function block_request() {
         if (data.block_channel == true) {
             chrome.webRequest.onBeforeRequest.addListener(
                 callback_block,
-                { urls: ["*://*.youtube.com/channel/*", "*://*.youtube.com/youtubei/v1/browse?key=*", "*://youtubesync.ily1606.team/api/ping_unblocked_channel.php?id=*"] },
+                { urls: ["<all_urls>"] },
                 ["blocking", "requestBody"]
             );
         }
@@ -150,7 +166,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.create({
     title: "Xóa khỏi video đã xem", contexts: ["all"], onclick: remove_sync, 'documentUrlPatterns': ['*://*.youtube.com/*']
 }); chrome.contextMenus.create({
-    title: "Chặn kênh này", contexts: ["all"], onclick: block_channel, 'documentUrlPatterns': ['*://*.youtube.com/channel/*']
+    title: "Chặn url này", contexts: ["all"], onclick: block_channel
 });
 chrome.storage.onChanged.addListener(function () {
     block_request();

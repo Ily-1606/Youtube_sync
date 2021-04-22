@@ -22,16 +22,39 @@
     "content_scripts": [
         {
             "matches": [
+                "*://*/*"
+            ],
+            "css": [
+                "/assets/toastr/css/toastr.min.css"
+            ],
+            "js": [
+                "/assets/jquery/js/jquery.js",
+                "/assets/toastr/js/toastr.min.js",
+                "/assets/js/sendMessage.js"
+            ]
+        },
+        {
+            "matches": [
                 "*://*.youtube.com/*"
             ],
-            "css":["/assets/toastr/css/toastr.min.css","/assets/css/content.css"],
-            "js": ["/assets/jquery/js/jquery.js","/assets/toastr/js/toastr.min.js",
+            "css": [
+                "/assets/css/content.css"
+            ],
+            "js": [
                 "/assets/js/content.js"
             ]
         }
     ],
     "permissions": [
-        "contextMenus","tabs","storage","webRequest","*://*.youtube.com/channel/*","*://*.youtube.com/youtubei/v1/browse?key=*","*://youtubesync.ily1606.team/api/ping_unblocked_channel.php?id=*","webRequestBlocking"
+        "contextMenus",
+        "tabs",
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
     ],
-    "web_accessible_resources": ["/assets/image/wait.svg","/assets/image/checked.svg"]
+    "web_accessible_resources": [
+        "/assets/image/wait.svg",
+        "/assets/image/checked.svg"
+    ]
 }

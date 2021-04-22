@@ -63,15 +63,7 @@ jQuery(function () {
         contextMenu = event.target;
     }, true);
     chrome.runtime.onMessage.addListener(function (info, sender, sendResponse) {
-        if (info.status != undefined) {
-            if (info.status) {
-                toastr.success(info.message, "Thành công!");
-            }
-            else {
-                toastr.error(info.message, "Thất bại!");
-            }
-        }
-        else {
+        if (info.status == undefined) {
             if (info == "getElement") {
                 contextMenu = $(contextMenu).parents("ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-video-renderer, ytd-grid-video-renderer, ytd-thumbnail")[0];
                 if (contextMenu != undefined) {
@@ -120,8 +112,8 @@ jQuery(function () {
             }
         });
     }, 2000);
-    chrome.storage.local.get(["block_subsribe"],function(data){
-        if(data["block_subsribe"] == false){
+    chrome.storage.local.get(["block_subsribe"], function (data) {
+        if (data["block_subsribe"] == false) {
             $("body").addClass("disable-block-subcribe");
         }
     });

@@ -24,7 +24,7 @@ if (isset($_SESSION["username"])) {
     $data["status"] = true;
     $data["data"] = array();
     while($row = mysqli_fetch_array($res)){
-        array_push($data["data"],array("id"=>$row["id_channel"],"create_time"=>$row["create_time"],"channel_name"=>$row["channel_name"],"url_chanel"=>$row["url_chanel"]));
+        array_push($data["data"],array("id"=>$row["id"],"create_time"=>$row["create_time"],"url_chanel"=>$row["url_chanel"]));
     }
     if(mysqli_num_rows($res) == 10){
         $data["next_page"] = true;

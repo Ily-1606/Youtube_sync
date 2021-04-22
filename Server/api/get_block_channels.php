@@ -15,7 +15,7 @@ if(isset($_SESSION["username"])){
         $data["data"] = array();
         unset($data["message"]);
         while ($row = mysqli_fetch_array($res)){
-            array_push($data["data"],$row["id_channel"]);
+            array_push($data["data"],$row["url_chanel"]);
         }
     }
 }
@@ -24,4 +24,3 @@ else{
     $data["message"] = "Bạn chưa đăng nhập, vui lòng đăng nhập!";
 }
 echo json_encode($data);
-?>

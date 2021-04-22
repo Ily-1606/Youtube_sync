@@ -6,9 +6,9 @@ ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-video-renderer{
     top: 0px;
     left: 0px;
 }
-ytd-subscribe-button-renderer{
+ytd-subscribe-button-renderer, ytd-button-renderer{
     display: none!important;
 }
-body.disable-block-subcribe ytd-subscribe-button-renderer{
+body.disable-block-subcribe ytd-subscribe-button-renderer, body.disable-block-subcribe ytd-button-renderer{
     display: flex!important;
 }
