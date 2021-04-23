@@ -135,7 +135,7 @@ function callback_block(details) {
             }
             else {
                 if (details.tabId && block) {
-                    chrome.tabs.update(details.tabId, { url: "/HTML/blocked.html" });
+                    chrome.tabs.update(details.tabId, { url: "https://www.youtube.com/" });
                     block = false;
                 }
             }
