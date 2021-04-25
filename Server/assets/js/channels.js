@@ -19,7 +19,7 @@ function check_login(callback) {
 }
 function delete_channel(id,url){
     $.ajax({
-        url: "https://youtubesync.ily1606.team/api/remove_blocked_channel.php",
+        url: "/api/remove_blocked_channel.php",
         method: "POST",
         data: "data_id=" + url,
         crossDomain: true,
@@ -29,7 +29,7 @@ function delete_channel(id,url){
             if(e.status){
                 $("#channel_"+id).remove();
                 $.ajax({
-                    url: "https://youtubesync.ily1606.team/api/ping_unblocked_channel.php?id="+url,
+                    url: "/api/ping_unblocked_channel.php?id="+url,
                     method: "GET"
                 });
             }else

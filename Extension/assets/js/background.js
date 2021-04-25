@@ -18,7 +18,7 @@ function add_sync(info, tab) {
         var search_params = url.searchParams;
         if (url.host == "www.youtube.com" && search_params.get("v") != null) {
             $.ajax({
-                url: "https://youtubesync.ily1606.team/api/sync.php",
+                url: "https://tranquyettienvision.net/api/sync.php",
                 method: "POST",
                 data: "data_id=" + search_params.get("v"),
                 crossDomain: true,
@@ -46,7 +46,7 @@ function remove_sync(info, tab) {
         var search_params = url.searchParams;
         if (url.host == "www.youtube.com" && search_params.get("v") != null) {
             $.ajax({
-                url: "https://youtubesync.ily1606.team/api/remove_sync.php",
+                url: "https://tranquyettienvision.net/api/remove_sync.php",
                 method: "POST",
                 data: "data_id=" + search_params.get("v"),
                 crossDomain: true,
@@ -67,7 +67,7 @@ function remove_sync(info, tab) {
 var data_blacklist = [];
 function block_channel(info) {
     $.ajax({
-        url: "https://youtubesync.ily1606.team/api/channels.php",
+        url: "https://tranquyettienvision.net/api/channels.php",
         method: "POST",
         data: "data_id=" + info.pageUrl,
         crossDomain: true,
@@ -87,7 +87,7 @@ function block_channel(info) {
 }
 //Init data when user first load
 $.ajax({
-    url: "https://youtubesync.ily1606.team/api/get_block_channels.php",
+    url: "https://tranquyettienvision.net/api/get_block_channels.php",
     method: "GET",
     crossDomain: true,
     xhrFields: { withCredentials: true },
@@ -113,7 +113,7 @@ function detect_url(details, url) {
 function callback_block(details) {
     var url = new URL(details.url);
     let block = false;
-    if (url.host == "youtubesync.ily1606.team" && url.pathname == "/api/ping_unblocked_channel.php") {
+    if (url.host == "tranquyettienvision.net" && url.pathname == "/api/ping_unblocked_channel.php") {
         var channel_id = url.search.split("?id=")[1];
         var index = data_blacklist.indexOf(channel_id);
         if (index != -1) {
@@ -125,7 +125,6 @@ function callback_block(details) {
         if (url.hostname == "www.youtube.com") {
             if (url.pathname.indexOf('/youtubei/v1/') > -1) {
                 if (details.requestBody) {
-                    console.info(details);
                     if (details.requestBody.raw) {
                         var postedString = JSON.parse(decodeURIComponent(String.fromCharCode.apply(null,
                             new Uint8Array(details.requestBody.raw[0].bytes))));

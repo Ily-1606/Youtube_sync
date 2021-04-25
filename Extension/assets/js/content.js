@@ -20,7 +20,7 @@ function check(el) {
 }
 function send() {
     $.ajax({
-        url: "https://youtubesync.ily1606.team/api/check_sync.php",
+        url: "https://tranquyettienvision.net/api/check_sync.php",
         crossDomain: true,
         xhrFields: { withCredentials: true },
         method: "POST",
